@@ -477,8 +477,11 @@ class Application(DesktopEntry):
 						continue
 
 				elif c == '\\':
-					in_esc = True
-					continue
+					# Unless within quotes, consider in esc.
+					if not in_quote:
+						in_esc = True
+						continue
+					# Within quotes, append \\ to _arg
 
 				elif c == '%' and not (in_quote or in_singlequote):
 					in_fieldcode = True
